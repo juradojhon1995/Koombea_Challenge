@@ -5,24 +5,21 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 class ConvertPage(BasePage):
-    # Elementos comunes
     INPUT_FIELD = (AppiumBy.ID, "com.ba.universalconverter:id/source_value")
     OUTPUT_FIELD = (AppiumBy.ID, "com.ba.universalconverter:id/target_value")
     MENU_BUTTON = (AppiumBy.XPATH, "//android.widget.ImageButton[@content-desc='Open navigation drawer']")
 
-    # Elementos de navegación
     AREA_OPTION = (AppiumBy.XPATH, "//android.widget.TextView[@text='Area']")
     VOLUME_OPTION = (AppiumBy.XPATH, "//android.widget.TextView[@text='Volume']")
     SPEED_OPTION = (AppiumBy.XPATH, "//android.widget.TextView[@text='Speed']")
     ACCELERATION_OPTION = (AppiumBy.XPATH, "//android.widget.TextView[@text='Acceleration']")
 
-    # Selectores de unidad de medida
+
     UNIT_SELECTOR = {
         "input": (AppiumBy.XPATH, "(//android.widget.Spinner)[1]"),
         "output": (AppiumBy.XPATH, "(//android.widget.Spinner)[2]")
     }
 
-    # Selector del contenedor donde aparecen las opciones
     UNIT_LIST = (AppiumBy.ID, "android:id/select_dialog_listview")
 
     def get_unit_locator(self, unit):
@@ -44,9 +41,9 @@ class ConvertPage(BasePage):
 
     def select_area_section(self):
         """Hace scroll en el menú lateral y selecciona la opción 'Area'"""
-        for _ in range(3):  # Intenta hasta 3 veces
+        for _ in range(3):
             try:
-                # Primero intentamos encontrar el elemento con UiScrollable
+
                 print("🔄 Intentando encontrar 'Volume' con scroll automático...")
                 self.driver.find_element(
                     AppiumBy.ANDROID_UIAUTOMATOR,
@@ -56,10 +53,9 @@ class ConvertPage(BasePage):
                     EC.presence_of_element_located(self.AREA_OPTION)
                 )
                 self.click(self.AREA_OPTION)
-                return  # Si logra hacer clic, salir de la función
+                return  
             except (NoSuchElementException, TimeoutException):
                 print("⚠ No se encontró con scroll automático, intentando swipe manual...")
-                # Si no lo encuentra, hacemos swipe manual en la izquierda del menú
                 self.driver.swipe(100, 1200, 100, 400, 800)
                 WebDriverWait(self.driver, 2).until(
                     EC.presence_of_element_located(self.AREA_OPTION)
@@ -67,9 +63,8 @@ class ConvertPage(BasePage):
 
     def select_volume_section(self):
         """Hace scroll en el menú lateral y selecciona la opción 'Volume'"""
-        for _ in range(3):  # Intenta hasta 3 veces
+        for _ in range(3):  
             try:
-                # Primero intentamos encontrar el elemento con UiScrollable
                 print("🔄 Intentando encontrar 'Volume' con scroll automático...")
                 self.driver.find_element(
                     AppiumBy.ANDROID_UIAUTOMATOR,
@@ -79,10 +74,9 @@ class ConvertPage(BasePage):
                     EC.presence_of_element_located(self.VOLUME_OPTION)
                 )
                 self.click(self.VOLUME_OPTION)
-                return  # Si logra hacer clic, salir de la función
+                return 
             except (NoSuchElementException, TimeoutException):
                 print("⚠ No se encontró con scroll automático, intentando swipe manual...")
-                # Si no lo encuentra, hacemos swipe manual en la izquierda del menú
                 self.driver.swipe(100, 1200, 100, 400, 800)
                 WebDriverWait(self.driver, 2).until(
                     EC.presence_of_element_located(self.VOLUME_OPTION)
@@ -90,9 +84,8 @@ class ConvertPage(BasePage):
 
     def select_speed_section(self):
         """Hace scroll en el menú lateral y selecciona la opción 'Speed'"""
-        for _ in range(3):  # Intenta hasta 3 veces
+        for _ in range(3): 
             try:
-                # Primero intentamos encontrar el elemento con UiScrollable
                 print("🔄 Intentando encontrar 'Speed' con scroll automático...")
                 self.driver.find_element(
                     AppiumBy.ANDROID_UIAUTOMATOR,
@@ -102,10 +95,9 @@ class ConvertPage(BasePage):
                     EC.presence_of_element_located(self.SPEED_OPTION)
                 )
                 self.click(self.SPEED_OPTION)
-                return  # Si logra hacer clic, salir de la función
+                return  
             except (NoSuchElementException, TimeoutException):
                 print("⚠ No se encontró con scroll automático, intentando swipe manual...")
-                # Si no lo encuentra, hacemos swipe manual en la izquierda del menú
                 self.driver.swipe(100, 1200, 100, 400, 800)
                 WebDriverWait(self.driver, 2).until(
                     EC.presence_of_element_located(self.SPEED_OPTION)
@@ -116,9 +108,8 @@ class ConvertPage(BasePage):
 
     def select_acceleration_section(self):
         """Hace scroll en el menú lateral y selecciona la opción 'Acceleration'"""
-        for _ in range(3):  # Intenta hasta 3 veces
+        for _ in range(3):  
             try:
-                # Primero intentamos encontrar el elemento con UiScrollable
                 print("🔄 Intentando encontrar 'Acceleration' con scroll automático...")
                 self.driver.find_element(
                     AppiumBy.ANDROID_UIAUTOMATOR,
@@ -128,10 +119,9 @@ class ConvertPage(BasePage):
                     EC.presence_of_element_located(self.ACCELERATION_OPTION)
                 )
                 self.click(self.ACCELERATION_OPTION)
-                return  # Si logra hacer clic, salir de la función
+                return 
             except (NoSuchElementException, TimeoutException):
                 print("⚠ No se encontró con scroll automático, intentando swipe manual...")
-                # Si no lo encuentra, hacemos swipe manual en la izquierda del menú
                 self.driver.swipe(100, 1200, 100, 400, 800)
                 WebDriverWait(self.driver, 2).until(
                     EC.presence_of_element_located(self.ACCELERATION_OPTION)
@@ -144,30 +134,25 @@ class ConvertPage(BasePage):
 
     def select_unit(self, field, unit):
         """Abre el selector y elige la unidad correspondiente"""
-        for _ in range(3):  # Intentamos 3 veces si el elemento desaparece del DOM
+        for _ in range(3): 
             try:
-                # Intentamos abrir el selector de unidades
                 self.click(self.UNIT_SELECTOR[field])
-
-                # Esperar hasta que la lista de unidades esté visible
+                
                 WebDriverWait(self.driver, 5).until(
                     EC.presence_of_element_located(self.UNIT_LIST)
                 )
 
-                # Localizador de la unidad específica
                 unit_locator = self.get_unit_locator(unit)
 
-                # Esperamos a que la unidad sea interactuable
                 WebDriverWait(self.driver, 5).until(
                     EC.element_to_be_clickable(unit_locator)
                 )
                 self.click(unit_locator)
 
-                # Esperamos hasta que el selector desaparezca
                 WebDriverWait(self.driver, 5).until_not(
                     EC.presence_of_element_located(self.UNIT_LIST)
                 )
-                return  # Si todo funciona, salimos de la función
+                return 
             except StaleElementReferenceException:
                 print(f"⚠ Elemento '{field}' perdió referencia en el DOM, reintentando...")
 
